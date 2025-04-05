@@ -241,83 +241,43 @@ const developers = [
     }
 ]
 
+function GenerateTable(){
+    document.querySelector('#table-target').innerHTML = 
+    `<table class="table table-striped w-75 border">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>E-mail</th>
+                <th>Job</th>
+                <th>Age</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${GenerateTbody()}
+        </tbody>
+    </table>`
+}
 
-function GenerateTable() {
-    table = document.createElement("table");
-    document.querySelector('#table-target').appendChild(table);
-    table.classList.add('table');
-    table.classList.add('table-striped');
-    thead = document.createElement("thead");
-    table.appendChild(thead);
-    head_tr = document.createElement("tr");
-    thead.appendChild(head_tr);
-
-    image_th = document.createElement("th");
-    head_tr.appendChild(image_th);
-    image_th.innerHTML = "Image";
-
-    name_th = document.createElement("th");
-    head_tr.appendChild(name_th);
-    name_th.innerHTML = "Name";
-
-    mail_th = document.createElement("th");
-    head_tr.appendChild(mail_th);
-    mail_th.innerHTML = "E-mail";
-
-    job_th = document.createElement("th");
-    head_tr.appendChild(job_th);
-    job_th.innerHTML = "Job";
-
-    age_th = document.createElement("th");
-    head_tr.appendChild(age_th);
-    age_th.innerHTML = "Age";
-
-    salary_th = document.createElement("th");
-    head_tr.appendChild(salary_th);
-    salary_th.innerHTML = "Salary";
-
-    tbody = document.createElement("tbody");
-    table.appendChild(tbody);
+function GenerateTbody(){
+    tbody = ""
     developers.forEach(item => {
-        tr = document.createElement("tr");
-        tbody.appendChild(tr);
-
-        image_td = document.createElement("td");
-        tr.appendChild(image_td);
-        img = document.createElement("img");
-        image_td.appendChild(img);
-        img.src = item.image
-
-        name_td = document.createElement("td");
-        tr.appendChild(name_td);
-        name_td.innerHTML = item.name
-
-        mail_td = document.createElement("td");
-        tr.appendChild(mail_td);
-        a = document.createElement("a");
-        mail_td.appendChild(a);
-        a.href = "mailto:" + item.email;
-        a.innerHTML = item.email;
-
-        job_td = document.createElement("td");
-        tr.appendChild(job_td);
-        job_td.innerHTML = item.job
-
-        age_td = document.createElement("td");
-        tr.appendChild(age_td);
-        age_td.innerHTML = item.age
-
-        salary_td = document.createElement("td");
-        tr.appendChild(salary_td);
-        span = document.createElement("span");
-        salary_td.appendChild(span)
-        span.innerHTML = item.salary.toLocaleString("hu-HU") + " HUF"
-        span.classList.add("badge")
-        if (item.salary < 400000) { span.classList.add("bg-danger")
-        } else if (item.salary < 700000) { span.classList.add("bg-warning")
-        } else { span.classList.add("bg-success")
-        }
-    });
+        tbody +=
+        `<tr>
+            <td><img src=${item.image} alt="Profile"></td>
+            <td>${item.name}</td>
+            <td><a href="mailto:${item.email}">${item.email}</a></td>
+            <td>${item.job}</td>
+            <td>${item.age}</td>
+            <td>
+                <span class="badge ${item.salary < 400000 ? 'bg-danger' : item.salary < 700000 ? 'bg-warning' : 'bg-success'}">
+                    ${item.salary.toLocaleString("hu-HU")} HUF
+                </span>
+            </td>
+        </tr>`
+    }) 
+    return tbody
 }
 
 function Q1() {
@@ -332,7 +292,7 @@ function Q2(){
     sum = 0;
     filtered.forEach(item => { sum += item.salary });
     avg = sum / filtered.length;
-    document.querySelector('#Q2').innerHTML = avg
+    document.querySelector('#Q2').innerHTML = avg + " HUF"
 }
 
 function Q3(){
@@ -344,17 +304,18 @@ function Q3(){
 }
 
 function Q4() {
-    jobCount = {};
+    companyCount = {};
     developers.forEach(item => {
-        jobCount[item.job] = (jobCount[item.job] || 0) + 1;
+        company = item.email.split('@')[1].split('.')[0];
+        companyCount[company] = (companyCount[company] || 0) + 1;
     });
 
-    maxJob = Object.keys(jobCount)[0];
-    Object.keys(jobCount).forEach(key => {
-        if (jobCount[key] > jobCount[maxJob]) maxJob = key;
+    maxCompany = Object.keys(companyCount)[0];
+    Object.keys(companyCount).forEach(key => {
+        if (companyCount[key] > companyCount[maxCompany]) maxCompany = key;
     });
 
-    document.querySelector('#Q4').innerHTML = maxJob + ": " + jobCount[maxJob];
+    document.querySelector('#Q4').innerHTML = maxCompany + ": " + companyCount[maxCompany];
 }
 
 function Q5() {

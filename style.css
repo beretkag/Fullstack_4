@@ -1,11 +1,12 @@
 td:nth-child(1)>img{
     border-radius: 50%;
-    size: 30px 30px;
+    width: 30px;
+    height: 30px;
     object-fit: cover;
 }
 
 #calculations{
-    margin: 10px
+    margin-left: 12.5%;
 }
 
 #calculations p{
@@ -14,4 +15,9 @@ td:nth-child(1)>img{
 
 #calculations p span{
     font-weight: normal;
+}
+
+#table-target{
+    display: flex;
+    justify-content: center;
 }
