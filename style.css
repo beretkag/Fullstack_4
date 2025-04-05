@@ -1,0 +1,17 @@
+td:nth-child(1)>img{
+    border-radius: 50%;
+    size: 30px 30px;
+    object-fit: cover;
+}
+
+#calculations{
+    margin: 10px
+}
+
+#calculations p{
+    font-weight: bold;
+}
+
+#calculations p span{
+    font-weight: normal;
+}
